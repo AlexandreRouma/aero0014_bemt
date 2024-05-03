@@ -38,7 +38,7 @@ air = bemt.Fluid(AIR_DENSITY, AIR_DYN_VISCOSITY)
 # Create simulation configuration
 config = bemt.Configuration(blade, BLADE_COUNT, collective, 800, MPHtoMS(135), air)
 
-# Run simulation reusing the last solution for faster convergence
+# Run simulation reusing the last solution
 results = bemt.solve(config)
 
 # Print out results
