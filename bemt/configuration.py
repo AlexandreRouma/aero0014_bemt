@@ -3,10 +3,11 @@ from bemt.blade import *
 from bemt.fluid import *
 
 class Configuration:
-    def __init__(self, blade: Blade, bladeCount: int, rotationSpeed: float, freeStreamVelocity: float, fluid: Fluid, elemCount: int = 50):
+    def __init__(self, blade: Blade, bladeCount: int, collectivePitch: float, rotationSpeed: float, freeStreamVelocity: float, fluid: Fluid, elemCount: int = 50):
         # Save configuration
         self.blade = blade
         self.bladeCount = bladeCount
+        self.collectivePitch = collectivePitch
         self.rotationSpeed = rotationSpeed
         self.freeStreamVelocity = freeStreamVelocity
         self.fluid = fluid
@@ -24,6 +25,13 @@ class Configuration:
 
     def setBladeCount(self, bladeCount):
         self.bladeCount = bladeCount
+
+    def setCollectivePitch(self, collectivePitch):
+        # Save value
+        self.collectivePitch = collectivePitch
+
+        # Regenerate elements
+        self.__generateElements()
 
     def setRotationSpeed(self, rotationSpeed):
         # Save value
@@ -44,7 +52,7 @@ class Configuration:
         self.r = np.linspace(self.blade.minRadius + self.dr*0.5, self.blade.maxRadius - self.dr*0.5, self.elemCount)
 
         # Compute twists
-        self.X = self.blade.twist(self.r)
+        self.X = self.blade.twist(self.r) + self.collectivePitch
         self.C = self.blade.chord(self.r)
 
         # Update rotation velocities at each radius

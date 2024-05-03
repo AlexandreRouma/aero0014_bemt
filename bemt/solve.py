@@ -16,10 +16,8 @@ def solve(config: Configuration, convergenceTolerance: float = 0.0001, maxIterat
     else:
         sol = Solution(config.elemCount, config.freeStreamVelocity)
 
-    relErr = []
-
     # Solve iteratively
-    for i in range(maxIterations):
+    for it in range(maxIterations):
         # Compute velocity components at disk
         va2n = 0.5*(config.freeStreamVelocity + sol.va3)
         vu2n = 0.5*sol.vu2p
@@ -29,9 +27,8 @@ def solve(config: Configuration, convergenceTolerance: float = 0.0001, maxIterat
         dmn = 2*np.pi*config.r*config.dr*config.fluid.density*va2n
 
         # Compute the velocity magnitude and flow angle
-        # TODO: Figure out if wa2n is a typo (assumed so and used va2n instead)
         w2n = np.sqrt(va2n**2 + wu2n**2)
-        beta2n = np.arctan2(wu2n, va2n)
+        beta2n = np.arctan(wu2n / va2n)
 
         # Compute the angle of attack and reynolds number
         AOAn = config.X - (0.5*np.pi + beta2n)
@@ -47,8 +44,8 @@ def solve(config: Configuration, convergenceTolerance: float = 0.0001, maxIterat
         dDn = 0.5*config.fluid.density*config.C*config.dr*CD*(w2n**2)
 
         # Compute the local thrust and torque
-        dTn = -config.n*(dLn*np.sin(beta2n) + dDn*np.cos(beta2n))
-        dFun = config.n*(dLn*np.cos(beta2n) - dDn*np.sin(beta2n))
+        dTn = -config.bladeCount*(dLn*np.sin(beta2n) + dDn*np.cos(beta2n))
+        dFun = config.bladeCount*(dLn*np.cos(beta2n) - dDn*np.sin(beta2n))
         dCn = config.r*dFun
 
         # Compute new estimate for the velocity components
@@ -66,7 +63,6 @@ def solve(config: Configuration, convergenceTolerance: float = 0.0001, maxIterat
         relErrVa3 = np.abs((va3n1 / sol.va3) - 1)
         relErrVu2p = np.abs((vu2pn1 / sol.vu2p) - 1)
         maxRelErr = np.max([ np.max(relErrVa3), np.max(relErrVu2p) ]) # TODO: Find faster way
-        relErr.append(maxRelErr)
 
         # Update solution
         sol.va3 = va3n1
@@ -75,8 +71,8 @@ def solve(config: Configuration, convergenceTolerance: float = 0.0001, maxIterat
         # If it converged enough, mark as converged and stop iterating
         if maxRelErr < convergenceTolerance:
             sol.converged = True
-            sol.iterations = i+1
+            sol.iterations = it+1
             break
     
     # Return solution
-    return sol, relErr
+    return sol
