@@ -1,6 +1,6 @@
-# How to Install
+# BEMT Simulator Implementation
 
-## Install dependencies
+## How to Install
 
 ### Step 1: Create a Virtual Environement
 ```
