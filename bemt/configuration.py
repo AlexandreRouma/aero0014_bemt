@@ -49,7 +49,7 @@ class Configuration:
     def __generateElements(self):
         # Compute the radius of each element
         self.dr = self.blade.length / self.elemCount
-        self.r = np.linspace(self.blade.minRadius + self.dr*0.5, self.blade.maxRadius - self.dr*0.5, self.elemCount)
+        self.r = np.linspace(self.blade.minRadius, self.blade.maxRadius - self.dr, self.elemCount)
 
         # Compute twists
         self.X = self.blade.twist(self.r) + self.collectivePitch
