@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from statement.propeller import *
 from utils.units import *
 from utils.collective_pitch import *
-from utils.plot_dat import *
 
 def plotVelTriangle(elemId, config: bemt.Configuration, blade: bemt.Blade, res: bemt.Solution, forceScale: float = 1, velocityScale: float = 0.015, aoaXOffset = 0, aoaYOffset = 0, dDOffset = 0, w2Offset = 0):
     # Draw airfoil

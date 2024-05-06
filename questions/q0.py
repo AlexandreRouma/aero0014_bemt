@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from statement.propeller import *
 from utils.units import *
 from utils.collective_pitch import *
-from utils.plot_dat import *
 
 def Q0(outPath: str, blade: bemt.Blade, air: bemt.Fluid):
     # Plot blade geometry
@@ -19,5 +18,5 @@ def Q0(outPath: str, blade: bemt.Blade, air: bemt.Fluid):
     ax2.set_ylabel('Pitch [°]')
     ax1.set_xlabel('r/R [-]')
     plt.legend()
-    plt.savefig(outPath + '/blade_geom.png')
+    plt.savefig(outPath + '/blade_geom.png', bbox_inches='tight')
     plt.close()

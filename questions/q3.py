@@ -64,9 +64,13 @@ def Q3(outPath: str, blade: bemt.Blade, air: bemt.Fluid):
         effs.append(eff)
     
     plt.plot(vvs, tthetas)
-    plt.show()
+    plt.xlabel('Free-Stream Velocity [mph]')
+    plt.ylabel('Collective Pitch [°]')
+    plt.savefig(outPath + '/q3_colpitch.png', bbox_inches='tight')
     plt.close()
 
-    plt.plot(vvs, effs)
-    plt.show()
+    plt.plot(vvs, effs*100.0)
+    plt.xlabel('Free-Stream Velocity [mph]')
+    plt.ylabel('Efficiency [%]')
+    plt.savefig(outPath + '/q3_efficiency.png', bbox_inches='tight')
     plt.close()
