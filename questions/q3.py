@@ -6,7 +6,7 @@ from utils.collective_pitch import *
 
 def Q3(outPath: str, blade: bemt.Blade, air: bemt.Fluid):
     # Compute for a range of velocities
-    vs = np.linspace(40, 220, 100)
+    vs = np.linspace(75, 300, 200)
 
     vvs = []
     tthetas = []
@@ -61,7 +61,7 @@ def Q3(outPath: str, blade: bemt.Blade, air: bemt.Fluid):
 
         vvs.append(v)
         tthetas.append(0.5*(thetaLow + thetaHigh))
-        effs.append(eff)
+        effs.append(eff*100.0)
     
     plt.plot(vvs, tthetas)
     plt.xlabel('Free-Stream Velocity [mph]')
@@ -69,7 +69,7 @@ def Q3(outPath: str, blade: bemt.Blade, air: bemt.Fluid):
     plt.savefig(outPath + '/q3_colpitch.png', bbox_inches='tight')
     plt.close()
 
-    plt.plot(vvs, effs*100.0)
+    plt.plot(vvs, effs)
     plt.xlabel('Free-Stream Velocity [mph]')
     plt.ylabel('Efficiency [%]')
     plt.savefig(outPath + '/q3_efficiency.png', bbox_inches='tight')

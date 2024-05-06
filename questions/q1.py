@@ -74,16 +74,6 @@ def Q1(outPath: str, blade: bemt.Blade, air: bemt.Fluid):
     plt.savefig(outPath + '/q1_thrust.png', bbox_inches='tight')
     plt.close()
 
-    # Plot torque graph
-    print('[Q1] Plotting torque graph...')
-    plt.plot(configA.r/BLADE_R, resA.dC/configA.dr, label='$\\theta_{75}$ = 25°, v = 90mph')
-    plt.plot(configB.r/BLADE_R, resB.dC/configB.dr, label='$\\theta_{75}$ = 35°, v = 135mph')
-    plt.legend()
-    plt.xlabel('r/R [-]')
-    plt.ylabel('dC/dr [N/m]')
-    plt.savefig(outPath + '/q1_torque.png', bbox_inches='tight')
-    plt.close()
-
     # Plot power graph
     print('[Q1] Plotting power graph...')
     plt.plot(configA.r/BLADE_R, resA.dP, label='$\\theta_{75}$ = 25°, v = 90mph')
